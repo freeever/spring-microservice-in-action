@@ -1,5 +1,6 @@
 package com.dit.smia.optimagrowth.license.controller;
 
+import java.util.Locale;
 import java.util.Random;
 
 import com.dit.smia.optimagrowth.license.model.License;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,9 +42,10 @@ public class LicenseController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createLicense(@PathVariable("organizationId") String organizationId,
-            @RequestBody License request) {
-        return ResponseEntity.ok(licenseService.createLicense(request, organizationId));
+    public ResponseEntity<String> createLicense(
+            @PathVariable("organizationId") String organizationId, @RequestBody License request,
+            @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(licenseService.createLicense(request, organizationId, locale));
     }
     
     @DeleteMapping(value="/{licenseId}")
